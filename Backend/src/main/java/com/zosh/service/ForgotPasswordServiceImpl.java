@@ -2,7 +2,7 @@ package com.zosh.service;
 
 import com.zosh.domain.VerificationType;
 import com.zosh.model.ForgotPasswordToken;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.repository.ForgotPasswordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,19 +10,18 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class ForgotPasswordServiceImpl implements ForgotPasswordService{
+public class ForgotPasswordServiceImpl implements ForgotPasswordService {
     @Autowired
     private ForgotPasswordRepository forgotPasswordRepository;
 
     @Override
-    public ForgotPasswordToken createToken(User user,
-                                           String id,
-                                           String otp,
-                                           VerificationType verificationType,
-                                           String sendTo
-    ) {
-        ForgotPasswordToken forgotPasswordToken=new ForgotPasswordToken();
-        forgotPasswordToken.setUser(user);
+    public ForgotPasswordToken createToken(Appuser appuser,
+            String id,
+            String otp,
+            VerificationType verificationType,
+            String sendTo) {
+        ForgotPasswordToken forgotPasswordToken = new ForgotPasswordToken();
+        forgotPasswordToken.setAppuser(appuser);
         forgotPasswordToken.setId(id);
         forgotPasswordToken.setOtp(otp);
         forgotPasswordToken.setVerificationType(verificationType);
@@ -33,13 +32,13 @@ public class ForgotPasswordServiceImpl implements ForgotPasswordService{
 
     @Override
     public ForgotPasswordToken findById(String id) {
-        Optional<ForgotPasswordToken> opt=forgotPasswordRepository.findById(id);
+        Optional<ForgotPasswordToken> opt = forgotPasswordRepository.findById(id);
         return opt.orElse(null);
     }
 
     @Override
     public ForgotPasswordToken findByUser(Long userId) {
-        return forgotPasswordRepository.findByUserId(userId);
+        return forgotPasswordRepository.findByAppuserId(userId);
     }
 
     @Override

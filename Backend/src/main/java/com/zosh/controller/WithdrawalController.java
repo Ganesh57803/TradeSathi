@@ -1,7 +1,7 @@
 package com.zosh.controller;
 
 import com.zosh.domain.WalletTransactionType;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.model.Wallet;
 import com.zosh.model.WalletTransaction;
 import com.zosh.model.Withdrawal;
@@ -34,19 +34,18 @@ public class WithdrawalController {
     @PostMapping("/api/withdrawal/{amount}")
     public ResponseEntity<?> withdrawalRequest(
             @PathVariable Long amount,
-            @RequestHeader("Authorization")String jwt) throws Exception {
-        User user=userService.findUserProfileByJwt(jwt);
-        Wallet userWallet=walletService.getUserWallet(user);
+            @RequestHeader("Authorization") String jwt) throws Exception {
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
+        Wallet userWallet = walletService.getUserWallet(appuser);
 
-        Withdrawal withdrawal=withdrawalService.requestWithdrawal(amount,user);
+        Withdrawal withdrawal = withdrawalService.requestWithdrawal(amount, appuser);
         walletService.addBalanceToWallet(userWallet, -withdrawal.getAmount());
 
         WalletTransaction walletTransaction = walletTransactionService.createTransaction(
                 userWallet,
-                WalletTransactionType.WITHDRAWAL,null,
+                WalletTransactionType.WITHDRAWAL, null,
                 "bank account withdrawal",
-                withdrawal.getAmount()
-        );
+                withdrawal.getAmount());
 
         return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }
@@ -55,26 +54,26 @@ public class WithdrawalController {
     public ResponseEntity<?> proceedWithdrawal(
             @PathVariable Long id,
             @PathVariable boolean accept,
-            @RequestHeader("Authorization")String jwt) throws Exception {
-        User user=userService.findUserProfileByJwt(jwt);
+            @RequestHeader("Authorization") String jwt) throws Exception {
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
 
-        Withdrawal withdrawal=withdrawalService.procedWithdrawal(id,accept);
+        Withdrawal withdrawal = withdrawalService.procedWithdrawal(id, accept);
 
-        Wallet userWallet=walletService.getUserWallet(user);
-        if(!accept){
+        Wallet userWallet = walletService.getUserWallet(appuser);
+        if (!accept) {
             walletService.addBalanceToWallet(userWallet, withdrawal.getAmount());
         }
-        
+
         return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }
 
     @GetMapping("/api/withdrawal")
     public ResponseEntity<List<Withdrawal>> getWithdrawalHistory(
 
-            @RequestHeader("Authorization")String jwt) throws Exception {
-        User user=userService.findUserProfileByJwt(jwt);
+            @RequestHeader("Authorization") String jwt) throws Exception {
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
 
-        List<Withdrawal> withdrawal=withdrawalService.getUsersWithdrawalHistory(user);
+        List<Withdrawal> withdrawal = withdrawalService.getUsersWithdrawalHistory(appuser);
 
         return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }
@@ -82,10 +81,10 @@ public class WithdrawalController {
     @GetMapping("/api/admin/withdrawal")
     public ResponseEntity<List<Withdrawal>> getAllWithdrawalRequest(
 
-            @RequestHeader("Authorization")String jwt) throws Exception {
-        User user=userService.findUserProfileByJwt(jwt);
+            @RequestHeader("Authorization") String jwt) throws Exception {
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
 
-        List<Withdrawal> withdrawal=withdrawalService.getAllWithdrawalRequest();
+        List<Withdrawal> withdrawal = withdrawalService.getAllWithdrawalRequest();
 
         return new ResponseEntity<>(withdrawal, HttpStatus.OK);
     }

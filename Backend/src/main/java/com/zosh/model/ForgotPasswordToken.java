@@ -13,7 +13,7 @@ public class ForgotPasswordToken {
     private String id;
 
     @OneToOne
-    private User user;
+    private Appuser appuser;
 
     private String otp;
 

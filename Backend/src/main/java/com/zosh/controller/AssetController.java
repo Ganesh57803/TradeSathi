@@ -2,7 +2,7 @@ package com.zosh.controller;
 
 import com.zosh.exception.UserException;
 import com.zosh.model.Asset;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.service.AssetService;
 
 import com.zosh.service.UserService;
@@ -30,23 +30,21 @@ public class AssetController {
         return ResponseEntity.ok().body(asset);
     }
 
-    @GetMapping("/coin/{coinId}/user")
-    public ResponseEntity<Asset> getAssetByUserIdAndCoinId(
+    @GetMapping("/coin/{coinId}/appuser")
+    public ResponseEntity<Asset> getAssetByAppuserIdAndCoinId(
             @PathVariable String coinId,
-            @RequestHeader("Authorization") String jwt
-    ) throws Exception {
+            @RequestHeader("Authorization") String jwt) throws Exception {
 
-        User user=userService.findUserProfileByJwt(jwt);
-        Asset asset = assetService.findAssetByUserIdAndCoinId(user.getId(), coinId);
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
+        Asset asset = assetService.findAssetByAppuserIdAndCoinId(appuser.getId(), coinId);
         return ResponseEntity.ok().body(asset);
     }
 
     @GetMapping()
     public ResponseEntity<List<Asset>> getAssetsForUser(
-            @RequestHeader("Authorization") String jwt
-    ) throws UserException {
-        User user=userService.findUserProfileByJwt(jwt);
-        List<Asset> assets = assetService.getUsersAssets(user.getId());
+            @RequestHeader("Authorization") String jwt) throws UserException {
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
+        List<Asset> assets = assetService.getUsersAssets(appuser.getId());
         return ResponseEntity.ok().body(assets);
     }
 }

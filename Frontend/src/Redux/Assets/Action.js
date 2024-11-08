@@ -31,7 +31,7 @@ export const getAssetById =
     dispatch({ type: types.GET_ASSET_DETAILS_REQUEST });
 
     try {
-      const response = await api.get(`/api/assets/coin/${coinId}/user`, {
+      const response = await api.get(`/api/assets/coin/${coinId}/appuser`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },

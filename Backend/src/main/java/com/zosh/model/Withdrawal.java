@@ -18,7 +18,7 @@ public class Withdrawal {
     private Long amount;
 
     @ManyToOne
-    private User user;
+    private Appuser appuser;
 
     private LocalDateTime date;
 }

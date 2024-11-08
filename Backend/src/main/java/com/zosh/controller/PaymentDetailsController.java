@@ -2,7 +2,7 @@ package com.zosh.controller;
 
 import com.zosh.exception.UserException;
 import com.zosh.model.PaymentDetails;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.service.PaymentDetailsService;
 import com.zosh.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,15 +25,14 @@ public class PaymentDetailsController {
             @RequestBody PaymentDetails paymentDetailsRequest,
             @RequestHeader("Authorization") String jwt) throws UserException {
 
-        User user = userService.findUserProfileByJwt(jwt);
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
 
-        PaymentDetails paymentDetails=paymentDetailsService.addPaymentDetails(
+        PaymentDetails paymentDetails = paymentDetailsService.addPaymentDetails(
                 paymentDetailsRequest.getAccountNumber(),
                 paymentDetailsRequest.getAccountHolderName(),
                 paymentDetailsRequest.getIfsc(),
                 paymentDetailsRequest.getBankName(),
-                user
-        );
+                appuser);
         return new ResponseEntity<>(paymentDetails, HttpStatus.CREATED);
     }
 
@@ -42,9 +41,9 @@ public class PaymentDetailsController {
 
             @RequestHeader("Authorization") String jwt) throws UserException {
 
-        User user = userService.findUserProfileByJwt(jwt);
+        Appuser appuser = userService.findUserProfileByJwt(jwt);
 
-        PaymentDetails paymentDetails=paymentDetailsService.getUsersPaymentDetails(user);
+        PaymentDetails paymentDetails = paymentDetailsService.getUsersPaymentDetails(appuser);
         return new ResponseEntity<>(paymentDetails, HttpStatus.CREATED);
     }
 }

@@ -51,7 +51,7 @@ const WithdrawalAdmin = () => {
               <TableRow>
                 
                 <TableHead className="py-5">Date</TableHead>
-                <TableHead className="py-5">User</TableHead>
+                <TableHead className="py-5">Appuser</TableHead>
                 <TableHead>Method</TableHead>
                 <TableHead>Amount</TableHead>
                 <TableHead className="text-right">Status</TableHead>
@@ -65,8 +65,8 @@ const WithdrawalAdmin = () => {
                     {readableTimestamp(item?.date)}
                   </TableCell>
                   <TableCell>
-                    <p className="font-bold">{item.user.fullName}</p>
-                    <p className="text-gray-300">{item.user.email}</p>
+                    <p className="font-bold">{item.appuser.fullName}</p>
+                    <p className="text-gray-300">{item.appuser.email}</p>
                   </TableCell>
                   <TableCell>{"Bank Account"}</TableCell>
                   <TableCell className="text-green-500">{item.amount} USD</TableCell>

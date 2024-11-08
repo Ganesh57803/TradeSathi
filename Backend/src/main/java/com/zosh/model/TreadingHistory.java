@@ -23,5 +23,5 @@ public class TreadingHistory {
     private Coin coin;
 
     @ManyToOne
-    private User user;
+    private Appuser appuser;
 }

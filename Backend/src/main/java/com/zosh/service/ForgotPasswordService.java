@@ -2,12 +2,12 @@ package com.zosh.service;
 
 import com.zosh.domain.VerificationType;
 import com.zosh.model.ForgotPasswordToken;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 
 public interface ForgotPasswordService {
 
-    ForgotPasswordToken createToken(User user, String id, String otp,
-                                    VerificationType verificationType,String sendTo);
+    ForgotPasswordToken createToken(Appuser appuser, String id, String otp,
+            VerificationType verificationType, String sendTo);
 
     ForgotPasswordToken findById(String id);
 
@@ -15,5 +15,5 @@ public interface ForgotPasswordService {
 
     void deleteToken(ForgotPasswordToken token);
 
-    boolean verifyToken(ForgotPasswordToken token,String otp);
+    boolean verifyToken(ForgotPasswordToken token, String otp);
 }

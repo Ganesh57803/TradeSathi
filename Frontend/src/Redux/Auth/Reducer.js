@@ -14,7 +14,7 @@ import {
 } from "./ActionTypes";
 
 const initialState = {
-  user: null,
+  appuser: null,
   loading: false,
   error: null,
   jwt: null,
@@ -40,7 +40,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        user: action.payload,
+        appuser: action.payload,
         fetchingUser: false,
         
       };
@@ -56,7 +56,7 @@ const authReducer = (state = initialState, action) => {
       };
     case LOGOUT:
       localStorage.removeItem("jwt");
-      return { ...state, jwt: null, user: null };
+      return { ...state, jwt: null, appuser: null };
     default:
       return state;
   }

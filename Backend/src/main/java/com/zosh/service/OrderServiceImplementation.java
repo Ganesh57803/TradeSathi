@@ -36,19 +36,17 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     @Transactional
-    public Order createOrder(User user, OrderItem orderItem, OrderType orderType) {
+    public Order createOrder(Appuser appuser, OrderItem orderItem, OrderType orderType) {
 
-
-        double price = orderItem.getCoin().getCurrentPrice()*orderItem.getQuantity();
+        double price = orderItem.getCoin().getCurrentPrice() * orderItem.getQuantity();
 
         Order order = new Order();
-        order.setUser(user);
+        order.setAppuser(appuser);
         order.setOrderItem(orderItem);
         order.setOrderType(orderType);
         order.setPrice(BigDecimal.valueOf(price));
         order.setTimestamp(LocalDateTime.now());
         order.setStatus(OrderStatus.PENDING);
-
 
         return orderRepository.save(order);
     }
@@ -61,7 +59,7 @@ public class OrderServiceImplementation implements OrderService {
 
     @Override
     public List<Order> getAllOrdersForUser(Long userId, String orderType, String assetSymbol) {
-        List<Order> allUserOrders = orderRepository.findByUserId(userId);
+        List<Order> allUserOrders = orderRepository.findByAppuserId(userId);
 
         if (orderType != null && !orderType.isEmpty()) {
             OrderType type = OrderType.valueOf(orderType.toUpperCase());
@@ -93,10 +91,8 @@ public class OrderServiceImplementation implements OrderService {
         }
     }
 
-
-    private OrderItem createOrderItem(Coin coin,double quantity,double buyPrice,double sellPrice) {
+    private OrderItem createOrderItem(Coin coin, double quantity, double buyPrice, double sellPrice) {
         OrderItem orderItem = new OrderItem();
-
 
         orderItem.setCoin(coin);
         orderItem.setQuantity(quantity);
@@ -104,62 +100,56 @@ public class OrderServiceImplementation implements OrderService {
         orderItem.setBuyPrice(buyPrice);
         orderItem.setSellPrice(sellPrice);
 
-
         return orderItemRepository.save(orderItem);
     }
 
     @Transactional
-    public Order buyAsset(Coin coin,double quantity, User user) throws Exception {
-        if(quantity<0)throw new Exception("quantity should be > 0");
-        double buyPrice=coin.getCurrentPrice();
+    public Order buyAsset(Coin coin, double quantity, Appuser appuser) throws Exception {
+        if (quantity < 0)
+            throw new Exception("quantity should be > 0");
+        double buyPrice = coin.getCurrentPrice();
 
-        OrderItem orderItem = createOrderItem(coin,quantity,buyPrice,0);
+        OrderItem orderItem = createOrderItem(coin, quantity, buyPrice, 0);
 
-
-        Order order = createOrder(user, orderItem, OrderType.BUY);
+        Order order = createOrder(appuser, orderItem, OrderType.BUY);
         orderItem.setOrder(order);
 
-
-        walletService.payOrderPayment(order, user);
+        walletService.payOrderPayment(order, appuser);
 
         order.setStatus(OrderStatus.SUCCESS);
         order.setOrderType(OrderType.BUY);
 
         Order savedOrder = orderRepository.save(order);
 
-        Asset oldAsset = assetService.findAssetByUserIdAndCoinId(
-                order.getUser().getId(),
-                order.getOrderItem().getCoin().getId()
-        );
+        Asset oldAsset = assetService.findAssetByAppuserIdAndCoinId(
+                order.getAppuser().getId(),
+                order.getOrderItem().getCoin().getId());
 
         if (oldAsset == null) {
             assetService.createAsset(
-                    user,orderItem.getCoin(),
-                    orderItem.getQuantity()
-            );
+                    appuser, orderItem.getCoin(),
+                    orderItem.getQuantity());
         } else {
             assetService.updateAsset(
-                    oldAsset.getId(),quantity
-            );
+                    oldAsset.getId(), quantity);
         }
 
         return savedOrder;
     }
 
     @Transactional
-    public Order sellAsset(Coin coin,double quantity, User user) throws Exception {
-        double sellPrice =coin.getCurrentPrice();
+    public Order sellAsset(Coin coin, double quantity, Appuser appuser) throws Exception {
+        double sellPrice = coin.getCurrentPrice();
 
-        Asset assetToSell = assetService.findAssetByUserIdAndCoinId(
-                user.getId(),
-                coin.getId()
-        );
+        Asset assetToSell = assetService.findAssetByAppuserIdAndCoinId(
+                appuser.getId(),
+                coin.getId());
 
         if (assetToSell != null) {
 
-            OrderItem orderItem = createOrderItem(coin,quantity, assetToSell.getBuyPrice(), sellPrice);
+            OrderItem orderItem = createOrderItem(coin, quantity, assetToSell.getBuyPrice(), sellPrice);
 
-            Order order = createOrder(user, orderItem, OrderType.SELL);
+            Order order = createOrder(appuser, orderItem, OrderType.SELL);
 
             orderItem.setOrder(order);
 
@@ -167,13 +157,12 @@ public class OrderServiceImplementation implements OrderService {
 
             if (assetToSell.getQuantity() >= quantity) {
 
-                walletService.payOrderPayment(order, user);
+                walletService.payOrderPayment(order, appuser);
 
-                Asset updatedAsset=assetService.updateAsset(
+                Asset updatedAsset = assetService.updateAsset(
                         assetToSell.getId(),
-                        -quantity
-                );
-                if(updatedAsset.getQuantity()*coin.getCurrentPrice()<=1){
+                        -quantity);
+                if (updatedAsset.getQuantity() * coin.getCurrentPrice() <= 1) {
                     assetService.deleteAsset(updatedAsset.getId());
                 }
                 return savedOrder;
@@ -184,22 +173,21 @@ public class OrderServiceImplementation implements OrderService {
             }
         }
 
-            throw new Exception("Asset not found for selling");
+        throw new Exception("Asset not found for selling");
 
     }
 
     @Override
     @Transactional
-    public Order processOrder(Coin coin,double quantity,OrderType orderType, User user) throws Exception {
+    public Order processOrder(Coin coin, double quantity, OrderType orderType, Appuser appuser) throws Exception {
 
         if (orderType == OrderType.BUY) {
-            return buyAsset(coin,quantity, user);
+            return buyAsset(coin, quantity, appuser);
         } else if (orderType == OrderType.SELL) {
-            return sellAsset(coin,quantity, user);
+            return sellAsset(coin, quantity, appuser);
         } else {
             throw new Exception("Invalid order type");
         }
     }
-
 
 }

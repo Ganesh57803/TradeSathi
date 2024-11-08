@@ -2,8 +2,7 @@ package com.zosh.service;
 
 import com.zosh.domain.USER_ROLE;
 
-
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,15 +14,13 @@ public class DataInitializationComponent implements CommandLineRunner {
 
     private final UserRepository userRepository;
 
-
     private PasswordEncoder passwordEncoder;
 
     @Autowired
     public DataInitializationComponent(UserRepository userRepository,
-                                       PasswordEncoder passwordEncoder
-                                       ) {
+            PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordEncoder=passwordEncoder;
+        this.passwordEncoder = passwordEncoder;
 
     }
 
@@ -35,14 +32,14 @@ public class DataInitializationComponent implements CommandLineRunner {
     private void initializeAdminUser() {
         String adminUsername = "codewithzosh@gmail.com";
 
-        if (userRepository.findByEmail(adminUsername)==null) {
-            User adminUser = new User();
+        if (userRepository.findByEmail(adminUsername) == null) {
+            Appuser adminUser = new Appuser();
 
             adminUser.setPassword(passwordEncoder.encode("codewithzosh"));
             adminUser.setFullName("Code With Zosh");
             adminUser.setEmail(adminUsername);
             adminUser.setRole(USER_ROLE.ROLE_ADMIN);
-            User admin=userRepository.save(adminUser);
+            Appuser admin = userRepository.save(adminUser);
         }
     }
 

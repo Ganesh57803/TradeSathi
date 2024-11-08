@@ -1,7 +1,7 @@
 package com.zosh.controller;
 
 import com.zosh.exception.UserException;
-import com.zosh.model.User;
+import com.zosh.model.Appuser;
 import com.zosh.model.VerificationCode;
 import com.zosh.service.EmailService;
 import com.zosh.service.UserService;
@@ -27,8 +27,5 @@ public class VerificationController {
         this.verificationService = verificationService;
         this.userService = userService;
     }
-
-
-
 
 }

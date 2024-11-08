@@ -38,7 +38,7 @@ const Profile = () => {
               <div className="space-y-7">
                 <div className="flex">
                   <p className="w-[9rem]">Email : </p>
-                  <p className="text-gray-500">{auth.user?.email} </p>
+                  <p className="text-gray-500">{auth.appuser?.email} </p>
                 </div>
                 <div className="flex">
                   <p className="w-[9rem]">Full Name : </p>
@@ -80,7 +80,7 @@ const Profile = () => {
               <div className="flex items-center gap-3">
                 <CardTitle>2 Step Verification</CardTitle>
 
-                {auth.user.twoFactorAuth?.enabled ? (
+                {auth.appuser.twoFactorAuth?.enabled ? (
                   <Badge className="space-x-2 text-white bg-green-600">
                     <VerifiedIcon /> <span>{"Enabled"}</span>
                   </Badge>
@@ -117,7 +117,7 @@ const Profile = () => {
             <CardContent className="space-y-5 ">
               <div className="flex items-center">
                 <p className="w-[8rem]">Email :</p>
-                <p>{auth.user.email}</p>
+                <p>{auth.appuser.email}</p>
               </div>
               {/* <div className="flex items-center">
                 <p className="w-[8rem]">Mobile :</p>
@@ -149,7 +149,7 @@ const Profile = () => {
               <div className="flex items-center gap-3">
                 <CardTitle>Account Status</CardTitle>
 
-                {auth.user.verified ? (
+                {auth.appuser.verified ? (
                   <Badge className="space-x-2 text-white bg-green-600">
                     <VerifiedIcon /> <span>verified</span>
                   </Badge>
@@ -161,7 +161,7 @@ const Profile = () => {
             <CardContent className="space-y-5">
               <div className="flex items-center">
                 <p className="w-[8rem]">Email :</p>
-                <p>{auth.user.email}</p>
+                <p>{auth.appuser.email}</p>
               </div>
               <div className="flex items-center">
                 <p className="w-[8rem]">Mobile :</p>

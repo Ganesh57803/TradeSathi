@@ -33,7 +33,7 @@ const TwoFactorAuth = () => {
         
         <Card className="p-5 flex flex-col justify-center items-center">
         <Avatar className="w-20 h-20">
-          <AvatarImage  src="https://cdn.dribbble.com/users/1125847/screenshots/15197732/media/7201b01895b7b60d33eea77d098eb7b3.png?resize=1600x1200&vertical=center" />
+          <AvatarImage  src="https://cdn.dribbble.com/appusers/1125847/screenshots/15197732/media/7201b01895b7b60d33eea77d098eb7b3.png?resize=1600x1200&vertical=center" />
         </Avatar>
           <CardHeader>
             <div className="flex items-center gap-5">

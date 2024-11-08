@@ -21,10 +21,7 @@ public class Asset {
     @ManyToOne
     private Coin coin;
 
-   
-
     @ManyToOne
-    private User user;
-
+    private Appuser appuser;
 
 }

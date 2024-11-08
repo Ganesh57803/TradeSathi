@@ -1,29 +1,27 @@
 package com.zosh.service;
 
-
 import com.zosh.domain.VerificationType;
 import com.zosh.exception.UserException;
-import com.zosh.model.User;
-
+import com.zosh.model.Appuser;
 
 public interface UserService {
 
-	public User findUserProfileByJwt(String jwt) throws UserException;
-	
-	public User findUserByEmail(String email) throws UserException;
-	
-	public User findUserById(Long userId) throws UserException;
+	public Appuser findUserProfileByJwt(String jwt) throws UserException;
 
-	public User verifyUser(User user) throws UserException;
+	public Appuser findUserByEmail(String email) throws UserException;
 
-	public User enabledTwoFactorAuthentication(VerificationType verificationType,
-											   String sendTo, User user) throws UserException;
+	public Appuser findUserById(Long userId) throws UserException;
 
-//	public List<User> getPenddingRestaurantOwner();
+	public Appuser verifyUser(Appuser appuser) throws UserException;
 
-	User updatePassword(User user, String newPassword);
+	public Appuser enabledTwoFactorAuthentication(VerificationType verificationType,
+			String sendTo, Appuser appuser) throws UserException;
 
-	void sendUpdatePasswordOtp(String email,String otp);
+	// public List<Appuser> getPenddingRestaurantOwner();
 
-//	void sendPasswordResetEmail(User user);
+	Appuser updatePassword(Appuser appuser, String newPassword);
+
+	void sendUpdatePasswordOtp(String email, String otp);
+
+	// void sendPasswordResetEmail(Appuser appuser);
 }

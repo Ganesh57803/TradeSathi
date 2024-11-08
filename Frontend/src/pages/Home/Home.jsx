@@ -252,7 +252,7 @@ const Home = () => {
                   } pb-5 w-auto`}
                 >
                   <div className="justify-end self-end px-5 py-2 rounded-md bg-slate-800 w-auto">
-                      {`hi, ${auth.user?.fullName}`}
+                      {`hi, ${auth.appuser?.fullName}`}
                       <p>you can ask crypto related any question</p>
                       <p>like, price, market cap extra...</p>
                     </div>
@@ -263,11 +263,11 @@ const Home = () => {
                   ref={chatContainerRef}
                   key={index}
                   className={`${
-                    item.role == "user" ? "self-end" : "self-start"
+                    item.role == "appuser" ? "self-end" : "self-start"
                   } pb-5 w-auto`}
                 >
                  
-                  {item.role == "user" ? (
+                  {item.role == "appuser" ? (
                     <div className="justify-end self-end px-5 py-2 rounded-full bg-slate-800 w-auto">
                       {item.prompt}
                     </div>

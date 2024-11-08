@@ -6,7 +6,7 @@ export const getUserWatchlist = () => async (dispatch) => {
   dispatch({ type: types.GET_USER_WATCHLIST_REQUEST });
 
   try {
-    const response = await api.get('/api/watchlist/user');
+    const response = await api.get('/api/watchlist/appuser');
 
     dispatch({
       type: types.GET_USER_WATCHLIST_SUCCESS,

@@ -44,7 +44,7 @@ const AccountVarificationForm = ({handleSubmit}) => {
       <div className="space-y-5 mt-10 w-full">
         <div className="flex justify-between items-center">
           <p className="">Email :</p>
-          <p>{auth.user?.email}</p>
+          <p>{auth.appuser?.email}</p>
           <Dialog>
             <DialogTrigger>
            

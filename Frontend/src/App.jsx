@@ -47,12 +47,12 @@ function App() {
 dispatch(getUser(localStorage.getItem("jwt")))
   },[auth.jwt])
 
-  const showNavbar=!auth.user?false:shouldShowNavbar(location.pathname,routes,auth.user?.role)
+  const showNavbar=!auth.appuser?false:shouldShowNavbar(location.pathname,routes,auth.appuser?.role)
 
   return (
     <>
       {" "}
-      {auth.user ? (
+      {auth.appuser ? (
         <>
          {showNavbar && <Navbar />}
           <Routes>
@@ -68,7 +68,7 @@ dispatch(getUser(localStorage.getItem("jwt")))
             <Route element={<Watchlist />} path="/watchlist" />
             <Route element={<Profile />} path="/profile" />
             <Route element={<SearchCoin />} path="/search" />
-            {auth.user.role=="ROLE_ADMIN"&&<Route element={<WithdrawalAdmin />} path="/admin/withdrawal" />}
+            {auth.appuser.role=="ROLE_ADMIN"&&<Route element={<WithdrawalAdmin />} path="/admin/withdrawal" />}
             <Route element={<Notfound />} path="*" />
             
           </Routes>

@@ -9,7 +9,7 @@ import {
 export const sendMessage = ({prompt,jwt}) => async (dispatch) => {
   dispatch({
     type: CHAT_BOT_REQUEST,
-    payload:{prompt,role:"user"}
+    payload:{prompt,role:"appuser"}
   });
 
   try {

@@ -15,11 +15,9 @@ public class TwoFactorOTP {
 
     @OneToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private User user;
+    private Appuser appuser;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String jwt;
-
-
 
 }

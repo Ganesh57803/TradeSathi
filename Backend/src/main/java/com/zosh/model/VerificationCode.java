@@ -15,7 +15,7 @@ public class VerificationCode {
     private String otp;
 
     @OneToOne
-    private User user;
+    private Appuser appuser;
 
     private String email;
 

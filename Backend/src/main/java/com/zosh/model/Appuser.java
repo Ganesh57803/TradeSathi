@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-	
+public class Appuser {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -24,16 +24,16 @@ public class User {
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	
-	private UserStatus status= UserStatus.PENDING;
+
+	private UserStatus status = UserStatus.PENDING;
 
 	private boolean isVerified = false;
 
 	@Embedded
-	private TwoFactorAuth twoFactorAuth= new TwoFactorAuth();
+	private TwoFactorAuth twoFactorAuth = new TwoFactorAuth();
 
 	private String picture;
 
-	private USER_ROLE role= USER_ROLE.ROLE_USER;
+	private USER_ROLE role = USER_ROLE.ROLE_USER;
 
 }

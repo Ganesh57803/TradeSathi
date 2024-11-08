@@ -22,7 +22,7 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    private User user;
+    private Appuser appuser;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -38,9 +38,7 @@ public class Order {
     @Column(nullable = false)
     private OrderStatus status = OrderStatus.PENDING;
 
-
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private OrderItem orderItem;
-
 
 }

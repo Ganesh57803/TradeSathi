@@ -6,12 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface AssetsRepository extends JpaRepository<Asset,Long> {
-   public List<Asset> findByUserId(Long userId);
+public interface AssetsRepository extends JpaRepository<Asset, Long> {
+   public List<Asset> findByAppuserId(Long userId);
 
-   Asset findByUserIdAndCoinId(Long userId, String coinId);
+   Asset findByAppuserIdAndCoinId(Long userId, String coinId);
 
-   Asset findByIdAndUserId(Long assetId, Long userId);
+   Asset findByIdAndAppuserId(Long assetId, Long userId);
 
-//   Optional<Assets> findByUserIdAndSymbolAndPortfolioId(Long userId,String symbol, Long portfolioId);
+   // Optional<Assets> findByAppuserIdAndSymbolAndPortfolioId(Long userId,String
+   // symbol, Long portfolioId);
 }

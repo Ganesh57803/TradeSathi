@@ -23,8 +23,8 @@ const Navbar = () => {
   const { auth } = useSelector((store) => store);
 
   const handleNavigate=()=>{
-    if(auth.user){
-      auth.user.role==="ROLE_ADMIN"?navigate("/admin/withdrawal"):navigate("/profile")
+    if(auth.appuser){
+      auth.appuser.role==="ROLE_ADMIN"?navigate("/admin/withdrawal"):navigate("/profile")
     }
   }
   return (
@@ -82,10 +82,10 @@ const Navbar = () => {
         </div>
         <div>
           <Avatar className="cursor-pointer" onClick={handleNavigate}>
-            {!auth.user ? (
+            {!auth.appuser ? (
               <AvatarIcon className=" h-8 w-8" />
             ) : (
-              <AvatarFallback>{auth.user?.fullName[0].toUpperCase()}</AvatarFallback>
+              <AvatarFallback>{auth.appuser?.fullName[0].toUpperCase()}</AvatarFallback>
             )}
           </Avatar>
         </div>

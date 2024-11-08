@@ -1,6 +1,6 @@
 // actionTypes.js
 
-// Action types for getting user wallet
+// Action types for getting appuser wallet
 export const GET_USER_WALLET_REQUEST = 'GET_USER_WALLET_REQUEST';
 export const GET_USER_WALLET_SUCCESS = 'GET_USER_WALLET_SUCCESS';
 export const GET_USER_WALLET_FAILURE = 'GET_USER_WALLET_FAILURE';

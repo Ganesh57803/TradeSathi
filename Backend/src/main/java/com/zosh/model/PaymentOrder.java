@@ -24,5 +24,5 @@ public class PaymentOrder {
     private PaymentMethod paymentMethod;
 
     @ManyToOne
-    private User user;
+    private Appuser appuser;
 }

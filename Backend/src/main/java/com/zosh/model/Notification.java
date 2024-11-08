@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Notification {
-    private Long fromUserId;
+    private Long fromAppuserId;
     private Long toUserid;
     private Long amount;
     private String message;
